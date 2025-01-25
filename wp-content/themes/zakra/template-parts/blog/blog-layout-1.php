@@ -44,7 +44,3 @@ foreach ( $content_orders as $key => $content_order ) {
 		get_template_part( 'template-parts/entry/entry', 'summary' );
 	}
 }
-
-if ( $post_content === 'excerpt' ) {
-	get_template_part( 'template-parts/entry/entry', 'footer' );
-}

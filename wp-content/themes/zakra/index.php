@@ -30,8 +30,7 @@ get_header();
 
 		<input type="submit" value="Enviar" name="submit_post">
 	</form>
-	<hr>
-	<h1>Lista de postagens</h1>
+	<h1 style="margin-top: 20px;">Lista de postagens</h1>
 	<?php echo apply_filters('zakra_after_primary_start_filter', false); // WPCS: XSS OK. 
 	?>
 

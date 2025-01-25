@@ -38,21 +38,10 @@ if ( 'post' === get_post_type() ) :
 		<?php
 		foreach ( $meta_orders as $key => $meta_order ) {
 
-			if ( 'comments' === $meta_order ) {
-
-				zakra_post_comments();
-			} elseif ( 'categories' === $meta_order ) {
-
-				zakra_posted_in();
-			} elseif ( 'author' === $meta_order ) {
+			if ( 'author' === $meta_order ) {
 
 				zakra_posted_by();
-			} elseif ( 'date' === $meta_order ) {
 
-				zakra_posted_on();
-			} elseif ( 'tags' === $meta_order ) {
-
-				zakra_post_tags();
 			}
 		}
 
