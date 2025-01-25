@@ -272,23 +272,19 @@ if ( ! function_exists( 'zakra_post_thumbnail' ) ) :
 
 				the_post_thumbnail();
 			else :
-				?>
 
-				<a class="zak-entry-thumbnail__link" href="<?php the_permalink(); ?>" aria-hidden="true">
-					<?php
-					the_post_thumbnail(
-						$image_size,
-						array(
-							'alt' => the_title_attribute(
-								array(
-									'echo' => false,
-								)
-							),
-						)
-					);
-					?>
-				</a>
-			<?php endif; // End is_singular(). ?>
+				the_post_thumbnail(
+					$image_size,
+					array(
+						'alt' => the_title_attribute(
+							array(
+								'echo' => false,
+							)
+						),
+					)
+				);
+				
+			endif; // End is_singular(). ?>
 
 		</div><!-- .zak-entry-thumbnail -->
 		<?php

@@ -21,7 +21,7 @@ get_header();
 
 <main id="zak-primary" class="zak-primary">
 	<h1>Adicionar postagem</h1>
-	<form action="" method="post">
+	<form action="" method="post" enctype="multipart/form-data">
 		<?php wp_nonce_field('save_post', 'save_post_nonce'); ?>
 
 		<label for="post_title">Título:</label>

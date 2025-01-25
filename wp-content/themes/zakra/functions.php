@@ -337,31 +337,46 @@ function zakra_maybe_enable_builder() {
 }
 
 function handle_form_submission() {
-    // Verifica se o formulário foi enviado
-    if (isset($_POST['submit_post'])) {
-        // Verifica o nonce para segurança
+    
+    if ( isset($_POST['submit_post']) ) {
         if (!isset($_POST['save_post_nonce']) || !wp_verify_nonce($_POST['save_post_nonce'], 'save_post')) {
             wp_die('Falha na validação de segurança.');
         }
 
-        // Sanitiza os dados do formulário
         $title = sanitize_text_field($_POST['post_title']);
         $content = sanitize_textarea_field($_POST['post_content']);
+		$image = $_FILES['post_image'];
 
-        // Insere o post no banco de dados
-        $post_id = wp_insert_post([
-            'post_title'   => $title,
-            'post_content' => $content,
-            'post_status'  => 'draft', // Status do post (publish, draft, etc.)
-            'post_author'  => get_current_user_id(), // Autor do post
-            'post_type'    => 'post', // Tipo do post (post, page, custom)
-        ]);
+		require_once(ABSPATH . 'wp-admin/includes/file.php');
+		$upload = wp_handle_upload($image, ['test_form' => false]);
 
-        if (is_wp_error($post_id)) {
-            echo 'Erro ao salvar o post.';
-        } else {
-            echo 'Post salvo com sucesso! ID: ' . $post_id;
-        }
+		if ( isset($upload['file']) ) {
+			$attachment_id = wp_insert_attachment([
+				'guid'           => $upload['file'],
+				'post_mime_type' => $upload['type'],
+				'post_title'     => sanitize_file_name($image['name']),
+				'post_content'   => '',
+				'post_status'    => 'inherit'
+			], $upload['file']);
+
+			require_once(ABSPATH . 'wp-admin/includes/image.php');
+			wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $upload['file']));
+	
+			$post_id = wp_insert_post([
+				'post_title'   => $title,
+				'post_content' => $content,
+				'post_status'  => 'publish', 
+				'post_author'  => get_current_user_id(), 
+				'post_type'    => 'post', 
+			]);
+	
+			if ( $post_id ) {
+				set_post_thumbnail($post_id, $attachment_id);
+				echo '<p>Post criado com sucesso!</p>';
+			}
+		} else {
+			echo 'Erro ao salvar o post.';
+		}
     }
 }
 
