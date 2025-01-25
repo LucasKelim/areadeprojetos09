@@ -188,6 +188,7 @@ figure {
 hr {
 	box-sizing: content-box;
 	height: 0;
+	margin: 1.5em 0 1.5em 0;
 }
 
 pre {
