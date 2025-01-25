@@ -21,12 +21,17 @@ get_header();
 
 <main id="zak-primary" class="zak-primary">
 	<h1>Adicionar postagem</h1>
-	<form action="" method="post" class="">
+	<form action="" method="post">
+		<?php wp_nonce_field('save_post', 'save_post_nonce'); ?>
+
 		<label for="post_title">Título:</label>
 		<input type="text" name="post_title" id="post_title" required>
 
 		<label for="post_content">Conteúdo:</label>
 		<textarea name="post_content" id="post_content" required></textarea>
+
+		<label for="post_image">Imagem:</label>
+		<input type="file" name="post_image" id="post_image" accept="image/*" required>
 
 		<input type="submit" value="Enviar" name="submit_post">
 	</form>
