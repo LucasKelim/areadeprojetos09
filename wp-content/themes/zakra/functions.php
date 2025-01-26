@@ -375,13 +375,13 @@ function handle_form_submission() {
 
 				$_SESSION['form_message'] = [
 					'type' => 'success',
-					'message' => 'Post criado com sucesso!'
+					'message' => 'Postagem criada com sucesso!'
 				];
 			}
 		} else {
 			$_SESSION['form_message'] = [
 				'type' => 'error',
-				'message' => 'Erro ao salvar postagem!'
+				'message' => 'Erro ao criar postagem!'
 			];
 		}
     }
