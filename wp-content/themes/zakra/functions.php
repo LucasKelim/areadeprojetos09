@@ -399,3 +399,20 @@ function enqueue_form_validation_script() {
 
 add_action('wp_enqueue_scripts', 'enqueue_form_validation_script');
 
+function enqueue_form_submission_message() {
+	if (isset($_SESSION['form_message'])) {
+		wp_enqueue_script(
+			'form-message',
+			get_template_directory_uri() . '/assets/js/form-message.js'
+		);
+
+		wp_localize_script(
+			'form-message',
+			'formMessageData',
+			$_SESSION['form_message']
+		);
+		unset($_SESSION['form_message']);
+	}
+}
+
+add_action('wp_enqueue_scripts', 'enqueue_form_submission_message');
