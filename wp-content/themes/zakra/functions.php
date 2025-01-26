@@ -338,7 +338,7 @@ function zakra_maybe_enable_builder() {
 
 function handle_form_submission() {
     
-    if ( isset($_POST['submit_post']) ) {
+    if (isset($_POST['submit_post'])) {
         if (!isset($_POST['save_post_nonce']) || !wp_verify_nonce($_POST['save_post_nonce'], 'save_post')) {
             wp_die('Falha na validação de segurança.');
         }
@@ -350,7 +350,7 @@ function handle_form_submission() {
 		require_once(ABSPATH . 'wp-admin/includes/file.php');
 		$upload = wp_handle_upload($image, ['test_form' => false]);
 
-		if ( isset($upload['file']) ) {
+		if (isset($upload['file'])) {
 			$attachment_id = wp_insert_attachment([
 				'guid'           => $upload['file'],
 				'post_mime_type' => $upload['type'],
@@ -370,14 +370,32 @@ function handle_form_submission() {
 				'post_type'    => 'post', 
 			]);
 	
-			if ( $post_id ) {
+			if ($post_id) {
 				set_post_thumbnail($post_id, $attachment_id);
-				echo '<p>Post criado com sucesso!</p>';
+
+				$_SESSION['form_message'] = [
+					'type' => 'success',
+					'message' => 'Post criado com sucesso!'
+				];
 			}
 		} else {
-			echo 'Erro ao salvar o post.';
+			$_SESSION['form_message'] = [
+				'type' => 'error',
+				'message' => 'Erro ao salvar postagem!'
+			];
 		}
     }
 }
 
 add_action('init', 'handle_form_submission');
+
+function enqueue_form_validation_script() {
+
+	wp_enqueue_script(
+		'form-validation',
+		get_template_directory_uri() . '/assets/js/form-validation.js'
+	);
+}
+
+add_action('wp_enqueue_scripts', 'enqueue_form_validation_script');
+
