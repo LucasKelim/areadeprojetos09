@@ -1165,7 +1165,7 @@ function wp_get_attachment_image( $attachment_id, $size = 'thumbnail', $icon = f
 		$attr = apply_filters( 'wp_get_attachment_image_attributes', $attr, $attachment, $size );
 
 		$attr = array_map( 'esc_attr', $attr );
-		$html = rtrim( "<img $hwstring" );
+		$html = rtrim( "<img width='400'" );
 
 		foreach ( $attr as $name => $value ) {
 			$html .= " $name=" . '"' . $value . '"';
